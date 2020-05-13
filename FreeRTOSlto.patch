@@ -1,0 +1,60 @@
+diff --git a/Middlewares/Third_Party/FreeRTOS/Source/include/task.h b/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+index df7ce95a..2abee2a8 100644
+--- a/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
++++ b/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+@@ -2221,7 +2221,11 @@ void vTaskRemoveFromUnorderedEventList( ListItem_t * pxEventListItem, const Tick
+  * Sets the pointer to the current TCB to the TCB of the highest priority task
+  * that is ready to run.
+  */
++#ifdef GNUC
++void vTaskSwitchContext( void ) PRIVILEGED_FUNCTION __attribute__((used));
++#else 
+ void vTaskSwitchContext( void ) PRIVILEGED_FUNCTION;
++#endif
+ 
+ /*
+  * THESE FUNCTIONS MUST NOT BE USED FROM APPLICATION CODE.  THEY ARE USED BY
+diff --git a/Middlewares/Third_Party/FreeRTOS/Source/tasks.c b/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+index 9e1cb9b3..76e260e3 100644
+--- a/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
++++ b/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+@@ -2842,6 +2842,9 @@ BaseType_t xSwitchRequired = pdFALSE;
+ #endif /* configUSE_APPLICATION_TASK_TAG */
+ /*-----------------------------------------------------------*/
+ 
++#ifdef GNUC 
++__attribute__((used))
++#endif
+ void vTaskSwitchContext( void )
+ {
+ 	if( uxSchedulerSuspended != ( UBaseType_t ) pdFALSE )
+diff --git a/Middlewares/Third_Party/FreeRTOS/Source/include/task.h b/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+index df7ce95a..f72fdb9b 100644
+--- a/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
++++ b/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+@@ -2221,7 +2221,11 @@ void vTaskRemoveFromUnorderedEventList( ListItem_t * pxEventListItem, const Tick
+  * Sets the pointer to the current TCB to the TCB of the highest priority task
+  * that is ready to run.
+  */
++#ifdef __GNUC__
++void vTaskSwitchContext( void ) PRIVILEGED_FUNCTION __attribute__((used));
++#else
+ void vTaskSwitchContext( void ) PRIVILEGED_FUNCTION;
++#endif
+ 
+ /*
+  * THESE FUNCTIONS MUST NOT BE USED FROM APPLICATION CODE.  THEY ARE USED BY
+diff --git a/Middlewares/Third_Party/FreeRTOS/Source/tasks.c b/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+index 9e1cb9b3..984a3750 100644
+--- a/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
++++ b/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+@@ -2842,6 +2842,9 @@ BaseType_t xSwitchRequired = pdFALSE;
+ #endif /* configUSE_APPLICATION_TASK_TAG */
+ /*-----------------------------------------------------------*/
+ 
++#ifdef __GNUC__
++__attribute__((used))
++#endif
+ void vTaskSwitchContext( void )
+ {
+ 	if( uxSchedulerSuspended != ( UBaseType_t ) pdFALSE )
