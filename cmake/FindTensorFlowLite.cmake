@@ -19,6 +19,7 @@ LIST(APPEND TensorFlowLite_INCLUDE_DIRS ${TENSORFLOW_INCLUDE_DIR})
 SET(TFLITE_REQUIRED_CONTENT
     flatbuffers
     fixedpoint
+    ruy
     )
 
 INCLUDE(FetchContent)
@@ -26,6 +27,11 @@ INCLUDE(FetchContent)
 FetchContent_Declare(
     flatbuffers
     GIT_REPOSITORY https://github.com/google/flatbuffers.git
+    )
+
+FetchContent_Declare(
+    ruy 
+    GIT_REPOSITORY https://github.com/google/ruy.git
     )
 
 FOREACH(CONTENT ${TFLITE_REQUIRED_CONTENT})
@@ -38,6 +44,12 @@ FOREACH(CONTENT ${TFLITE_REQUIRED_CONTENT})
     ELSEIF(${CONTENT} STREQUAL fixedpoint)
         FIND_PACKAGE(Fixedpoint)
         LIST(APPEND TensorFlowLite_INCLUDE_DIRS ${Fixedpoint_INCLUDE_DIR})
+    ELSEIF(${CONTENT} STREQUAL ruy)
+        FetchContent_GetProperties(ruy)
+        IF(NOT ruy_POPULATED)
+            FetchContent_Populate(ruy)
+        ENDIF()
+        LIST(APPEND TensorFlowLite_INCLUDE_DIRS ${ruy_SOURCE_DIR})
     ENDIF()
 ENDFOREACH()
 
@@ -73,6 +85,9 @@ SET(TFLITE_COMMON_KERNEL_HEADERS
     tensorflow/lite/kernels/internal/reference/process_broadcast_shapes.h           
     tensorflow/lite/kernels/internal/reference/quantize.h                           
     tensorflow/lite/kernels/internal/reference/round.h                              
+    tensorflow/lite/kernels/internal/reference/reduce.h 
+    tensorflow/lite/kernels/internal/reference/requantize.h 
+    tensorflow/lite/kernels/internal/reference/reduce_nearest_neighbor.h 
     tensorflow/lite/kernels/internal/reference/softmax.h                            
     tensorflow/lite/kernels/internal/reference/logistic.h                           
     tensorflow/lite/kernels/internal/reference/strided_slice.h                      
@@ -130,13 +145,14 @@ ELSE()
         SET(TFLITE_PLATFORM_HEADERS
             tensorflow/lite/micro/compatibility.h
             tensorflow/lite/micro/debug_log.h
-            tensorflow/lite/micro/debug_log_numbers.h
             tensorflow/lite/micro/memory_helpers.h
             tensorflow/lite/micro/micro_allocator.h
             tensorflow/lite/micro/micro_error_reporter.h
             tensorflow/lite/micro/micro_interpreter.h
             tensorflow/lite/micro/micro_mutable_op_resolver.h
             tensorflow/lite/micro/micro_optional_debug_tools.h
+            tensorflow/lite/micro/micro_string.h
+            tensorflow/lite/micro/micro_time.h
             tensorflow/lite/micro/micro_utils.h
             tensorflow/lite/micro/simple_memory_allocator.h
             tensorflow/lite/micro/test_helpers.h
@@ -147,12 +163,13 @@ ELSE()
         
         SET(TFLITE_PLATFORM_SOURCES
             # tensorflow/lite/micro/debug_log.cc
-            tensorflow/lite/micro/debug_log_numbers.cc
             tensorflow/lite/micro/memory_helpers.cc
             tensorflow/lite/micro/micro_allocator.cc
             tensorflow/lite/micro/micro_error_reporter.cc
             tensorflow/lite/micro/micro_interpreter.cc
             tensorflow/lite/micro/micro_optional_debug_tools.cc
+            tensorflow/lite/micro/micro_string.cc 
+            tensorflow/lite/micro/micro_time.cc
             tensorflow/lite/micro/micro_utils.cc
             tensorflow/lite/micro/simple_memory_allocator.cc
             tensorflow/lite/micro/test_helpers.cc
