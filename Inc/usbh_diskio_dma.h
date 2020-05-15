@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    sd_diskio.h
+  * @file    usbh_diskio_dma.h
   * @author  MCD Application Team
-  * @brief   Header for sd_diskio.c module.
+  * @brief   Header for usbh_diskio_dma.c module.
   ******************************************************************************
   * @attention
   *
@@ -44,17 +44,18 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __SD_DISKIO_H
-#define __SD_DISKIO_H
+#ifndef __USBH_DISKIO_H
+#define __USBH_DISKIO_H
 
 /* Includes ------------------------------------------------------------------*/
-#include  "stm324xg_eval_sd.h"
+#include "usbh_core.h"
+#include "usbh_msc.h"
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-extern const Diskio_drvTypeDef  SD_Driver;
+extern const Diskio_drvTypeDef  USBH_Driver;
 
-#endif /* __SD_DISKIO_H */
+#endif /* __USBH_DISKIO_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

@@ -1,17 +1,14 @@
-/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * File Name          : freertos.c
-  * Description        : Code for freertos applications
+  * @file    Camera/Camera_To_USBDisk/Inc/fatfs_storage.h
+  * @author  MCD Application Team
+  * @brief   This file contains all the functions prototypes for the storage
+  *          firmware driver.
   ******************************************************************************
-  * This notice applies to any and all portions of this file
-  * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether 
-  * inserted by the user or by software development tools
-  * are owned by their respective copyright owners.
+  * @attention
   *
-  * Copyright (c) 2020 STMicroelectronics International N.V. 
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  * All rights reserved.</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without 
   * modification, are permitted, provided that the following conditions are met:
@@ -46,62 +43,77 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __FATFS_STORAGE_H
+#define __FATFS_STORAGE_H
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "FreeRTOS.h"
-#include "task.h"
-#include "main.h"
+#include <string.h>
+#include <stdio.h>
+#include "ff.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */     
 
-/* USER CODE END Includes */
+/** @addtogroup STM324xG_EVAL_FAT_FS
+  * @{
+  */
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
+/** @addtogroup FAT_FS_STORAGE
+  * @{
+  */
 
-/* USER CODE END PTD */
+/** @defgroup FAT_FS_STORAGE_Exported_Types
+  * @{
+  */
+/**
+  * @}
+  */
 
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
+/** @defgroup FAT_FS_STORAGE_Exported_Constants
+  * @{
+  */
+/**
+  * @}
+  */
 
-/* USER CODE END PD */
+/** @defgroup FAT_FS_STORAGE_Exported_Macros
+  * @{
+  */
+/**
+  * @}
+  */
 
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
+/** @defgroup FAT_FS_STORAGE_Exported_Functions
+  * @{
+  */
+uint32_t Storage_Init (void);
+uint32_t Storage_OpenReadFile(uint32_t Address, const char* BmpName);
+uint32_t Storage_GetDirectoryBitmapFiles (const char* DirName, char* Files[]);
+uint32_t Storage_CheckBitmapFile(const char* BmpName, uint32_t *FileLen);
+uint8_t Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength);
 
-/* USER CODE END PM */
+#define MAX_BMP_FILES 10
+#define MAX_BMP_FILE_NAME 11
 
-/* Private variables ---------------------------------------------------------*/
-/* USER CODE BEGIN Variables */
+#ifdef __cplusplus
+}
+#endif
 
-/* USER CODE END Variables */
+#endif /* __FATFS_STORAGE_H */
+/**
+  * @}
+  */
 
-/* Private function prototypes -----------------------------------------------*/
-/* USER CODE BEGIN FunctionPrototypes */
-   
-/* USER CODE END FunctionPrototypes */
+/**
+  * @}
+  */
 
-/* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
-
-/* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
-static StaticTask_t xIdleTaskTCBBuffer;
-static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
-  
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
-{
-  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
-  *ppxIdleTaskStackBuffer = &xIdleStack[0];
-  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-  /* place for user code */
-}                   
-/* USER CODE END GET_IDLE_TASK_MEMORY */
-
-/* Private application code --------------------------------------------------*/
-/* USER CODE BEGIN Application */
-     
-/* USER CODE END Application */
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

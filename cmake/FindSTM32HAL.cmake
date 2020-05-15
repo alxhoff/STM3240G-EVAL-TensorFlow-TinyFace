@@ -15,7 +15,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F1")
                        i2s irda iwdg nand nor pccard pcd pwr rcc rtc sd smartcard
                        spi sram tim uart usart wwdg fsmc sdmmc usb)
 
-    SET(HAL_REQUIRED_COMPONENTS cortex pwr rcc)
+    SET(HAL_REQUIRED_COMPONENTS cortex hcd pwr rcc)
 
     # Components that have _ex sources
     SET(HAL_EX_COMPONENTS adc dac flash gpio pcd rcc rtc tim)
@@ -28,7 +28,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F2")
                        pcd pwr rcc rng rtc sd smartcard spi sram tim
                        uart usart wwdg fsmc sdmmc usb)
 
-    SET(HAL_REQUIRED_COMPONENTS cortex pwr rcc)
+    SET(HAL_REQUIRED_COMPONENTS cortex hcd pwr rcc)
 
     # Components that have _ex sources
     SET(HAL_EX_COMPONENTS adc dac dma flash pwr rcc rtc tim)
@@ -53,7 +53,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F4")
                        nand nor pccard pcd pwr qspi rcc rng rtc sai sd sdram
                        smartcard spdifrx spi sram tim uart usart wwdg)
 
-    SET(HAL_REQUIRED_COMPONENTS cortex pwr rcc)
+    SET(HAL_REQUIRED_COMPONENTS cortex hcd pwr rcc)
 
     # Components that have _ex sources
     SET(HAL_EX_COMPONENTS adc cryp dac dcmi dma flash fmpi2c hash i2c i2s pcd
@@ -67,7 +67,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F7")
                        pwr qspi rcc rng rtc sai sd sdram smartcard spdifrx spi
                        sram tim uart usart wwdg fmc sdmmc usb)
 
-    SET(HAL_REQUIRED_COMPONENTS cortex pwr rcc)
+    SET(HAL_REQUIRED_COMPONENTS cortex hcd pwr rcc)
 
     # Components that have _ex sources
     SET(HAL_EX_COMPONENTS adc crc cryp dac dcmi dma flash hash i2c pcd
@@ -103,7 +103,7 @@ ELSEIF(STM32_FAMILY STREQUAL "L4")
                        lcd lptim ltdc nand nor opamp ospi pcd pwr qspi rcc rng rtc sai
                        sd smartcard smbus spi sram swpmi tim tsc uart usart wwdg)
 
-    SET(HAL_REQUIRED_COMPONENTS cortex pwr rcc)
+    SET(HAL_REQUIRED_COMPONENTS cortex hcd pwr rcc)
 
     # Components that have _ex sources
     SET(HAL_EX_COMPONENTS adc crc cryp dac dfsdm dma flash hash i2c ltdc 

@@ -185,7 +185,7 @@ ELSE()
 
         SET(TFLITE_KERNEL_HEADERS
             tensorflow/lite/micro/kernels/activation_utils.h
-            tensorflow/lite/micro/kernels/all_ops_resolver.h
+            tensorflow/lite/micro/all_ops_resolver.h
             tensorflow/lite/micro/kernels/micro_ops.h
             tensorflow/lite/micro/kernels/micro_utils.h
             )
@@ -193,7 +193,7 @@ ELSE()
         SET(TFLITE_KERNEL_SOURCES
             tensorflow/lite/micro/kernels/activations.cc
             tensorflow/lite/micro/kernels/add.cc
-            tensorflow/lite/micro/kernels/all_ops_resolver.cc
+            tensorflow/lite/micro/all_ops_resolver.cc
             tensorflow/lite/micro/kernels/arg_min_max.cc
             tensorflow/lite/micro/kernels/ceil.cc
             tensorflow/lite/micro/kernels/comparisons.cc

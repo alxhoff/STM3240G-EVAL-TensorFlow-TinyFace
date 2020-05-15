@@ -4,7 +4,7 @@ IF(STM32_FAMILY STREQUAL "F0")
     SET(LL_COMPONENTS	adc bus comp cortex crc crs dac dma exti gpio i2c
 						i2s iwdg pwr rcc rtc spi system tim usart utils wwdg)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus cortex dma pwr rcc system utils)
 
     SET(LL_PREFIX stm32f0xx_)
 
@@ -12,7 +12,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F1")
     SET(LL_COMPONENTS	adc bus cortex crc dac dma exti gpio i2c i2s
 						iwdg pwr rcc rtc spi system tim usart usb utils wwdg)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus cortex dma pwr rcc system usb utils)
 
     SET(LL_PREFIX stm32f1xx_)
 
@@ -20,7 +20,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F2")
     SET(LL_COMPONENTS	adc bus cortex crc dac dma exti gpio i2c i2s iwdg pwr 
 						rcc rng rtc spi system tim usart usb utils wwdg)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus cortex dma pwr rcc system usb utils)
 
     SET(LL_PREFIX stm32f2xx_)
 
@@ -28,7 +28,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
     SET(LL_COMPONENTS	adc bus comp cortex crc dac dma exti gpio hrtim i2c i2s
 						iwdg opamp pwr rcc rtc spi system tim usart utils wwdg)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus cortex dma pwr rcc system utils)
 
     SET(LL_PREFIX stm32f3xx_)
 
@@ -37,7 +37,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F4")
 						lptim pwr rcc rng rtc spi system tim usart usb utils wwdg 
                         fsmc sdmmc)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus cortex dma pwr rcc usb system utils)
 
     SET(LL_PREFIX stm32f4xx_)
 
@@ -45,7 +45,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F7")
     SET(LL_COMPONENTS	adc bus cortex crc dac dma2d dma exti gpio i2c i2s iwdg
 						lptim pwr rcc rng rtc spi system tim usart usb utils wwdg)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus cortex dma pwr rcc system usb utils)
 
     SET(LL_PREFIX stm32f7xx_)
 
@@ -54,14 +54,14 @@ ELSEIF(STM32_FAMILY STREQUAL "L0")
 						iwdg lptim lpuart pwr rcc rng rtc spi system tim usart
 						utils wwdg)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus dma cortex pwr rcc system utils)
 
     SET(LL_PREFIX stm32l0xx_)
 
 ELSEIF(STM32_FAMILY STREQUAL "L1")
     SET(LL_COMPONENTS	adc comp crc dac dma exti fsmc gpio i2c opamp pwr rcc 
 						rtc sdmmc spi tim usart utils)
-    SET(LL_REQUIRED_COMPONENTS pwr rcc utils)
+    SET(LL_REQUIRED_COMPONENTS pwr dma rcc utils)
 
     SET(LL_PREFIX stm32l1xx_)
 
@@ -70,7 +70,7 @@ ELSEIF(STM32_FAMILY STREQUAL "L4")
 						gpio i2c iwdg lptim lpuart opamp pwr rcc rng rtc spi 
 						system tim usart usb utils wwdg)
 
-    SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
+    SET(LL_REQUIRED_COMPONENTS bus cortex pwr dma rcc system usb utils)
 
     SET(LL_PREFIX stm32l4xx_)
 

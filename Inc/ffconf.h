@@ -142,7 +142,7 @@
 */
 
 
-#define	_USE_LFN	3
+#define	_USE_LFN	0
 #define	_MAX_LFN	255
 /* The _USE_LFN switches the support of long file name (LFN).
 /
@@ -287,9 +287,8 @@
 #define _FS_REENTRANT	0
 
 #if _FS_REENTRANT
-#include "cmsis_os.h"
 #define _FS_TIMEOUT		1000
-#define	_SYNC_t         osSemaphoreId
+#define	_SYNC_t       NULL
 #endif
 /* The option _FS_REENTRANT switches the re-entrancy (thread safe) of the FatFs
 /  module itself. Note that regardless of this option, file access to different
