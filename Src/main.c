@@ -238,12 +238,18 @@ void DrawInputScreen(void)
   */
 void StartDefaultTask(void const *argument)
 {
-	DrawInputScreen();
-
+	// DrawInputScreen();
+	// BSP_CAMERA_ContinuousStart((uint8_t*)CAMERA_FRAME_BUFFER);
 	printf("Started\n");
+	// BSP_CAMERA_Suspend();
     setup();
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	for (;;) {
-		DrawTouchInput();
+		// DrawTouchInput();
+		BSP_LCD_SetFont(&Font16);
+		// BSP_LCD_Clear(LCD_COLOR_WHITE);
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		BSP_LCD_DisplayStringAt(0, 0, "ho", LEFT_MODE);
 		HAL_Delay(1);
 	}
 }
@@ -317,37 +323,32 @@ int main(void)
 
 	/* Enable the LCD */
 	BSP_LCD_DisplayOn();
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+
+	Touchscreen_Calibration();
+	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 
 	/* Clear the LCD Background layer */
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 
 	/** Touchscreen_Calibration(); */
-	/** BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize()); */
-
-	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	/** BSP_LCD_SetTextColor(LCD_COLOR_DARKRED); */
-	/** BSP_LCD_SetFont(&Font8); */
-	/** BSP_LCD_DisplayStringAt(210, (BSP_LCD_GetYSize() - 55), */
-	/**             (uint8_t *)hello_str, LEFT_MODE); */
-
-	/** Touchscreen_Calibration(); */
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 
 	/*Link the SD Card disk I/O driver ###################################*/
-	/** if (FATFS_LinkDriver(&SD_Driver, SDPath) != 0) { */
-	/**     Error_Handler(); */
-	/** } */
+	// if (FATFS_LinkDriver(&SD_Driver, SDPath) != 0) { 
+	//     Error_Handler(); 
+	// } 
 
 	/* Create a FAT file system (format) on the logical drive */
-	/** f_mkfs((TCHAR const *)SDPath, FM_ANY, 0, buffer, sizeof(buffer)); */
+	// f_mkfs((TCHAR const *)SDPath, FM_ANY, 0, buffer, sizeof(buffer)); 
 
-	/*##-4- Register the file system object to the FatFs module ################*/
-	/** if (f_mount(&SDFatFs, (TCHAR const *)SDPath, 0) != FR_OK) { */
-	/**     Error_Handler(); */
-	/** } */
+	// /*##-4- Register the file system object to the FatFs module ################*/
+	// if (f_mount(&SDFatFs, (TCHAR const *)SDPath, 0) != FR_OK) { 
+	//     Error_Handler(); 
+	// }
     BSP_CAMERA_Init(RESOLUTION_R320x240);
 
-    BSP_CAMERA_SnapshotStart((uint8_t*)CAMERA_FRAME_BUFFER);
+    // BSP_CAMERA_SnapshotStart((uint8_t*)CAMERA_FRAME_BUFFER);
 
 	/* Configure the system clock */
 	SystemClock_Config();
@@ -379,7 +380,6 @@ int main(void)
 
 	/* Start scheduler */
 	osKernelStart();
-
 	while (1) {
 	}
 }
