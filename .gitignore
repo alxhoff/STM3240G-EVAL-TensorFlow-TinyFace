@@ -12,7 +12,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-vscode 
+.vscode 
 
 # External tool builders
 .externalToolBuilders/

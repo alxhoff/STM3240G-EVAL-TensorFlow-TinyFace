@@ -18,9 +18,11 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 void StartDefaultTask(void const *argument);
+void StartCameraTask(void const *argument);
 void blink(void const *argument);
 
 osThreadId defaultTaskHandle;
+osThreadId cameraTaskHandle;
 osThreadId blinkTaskHandle;
 
 UART_HandleTypeDef UartHandle;
@@ -238,19 +240,32 @@ void DrawInputScreen(void)
   */
 void StartDefaultTask(void const *argument)
 {
-	// DrawInputScreen();
-	// BSP_CAMERA_ContinuousStart((uint8_t*)CAMERA_FRAME_BUFFER);
+	DrawInputScreen();
 	printf("Started\n");
-	// BSP_CAMERA_Suspend();
     setup();
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	for (;;) {
-		// DrawTouchInput();
+		DrawTouchInput();
 		BSP_LCD_SetFont(&Font16);
 		// BSP_LCD_Clear(LCD_COLOR_WHITE);
 		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-		BSP_LCD_DisplayStringAt(0, 0, "ho", LEFT_MODE);
 		HAL_Delay(1);
+	}
+}
+
+/**
+  * @brief  Function implementing the cameraTask thread.
+  * @param  argument: Not used 
+  * @retval None
+  */
+void StartCameraTask(void const *argument)
+{
+	BSP_CAMERA_SnapshotStart((uint8_t*)CAMERA_FRAME_BUFFER);
+	BSP_CAMERA_Suspend();
+	printf("Started\n");
+	for (;;) {
+		BSP_CAMERA_Resume();
+		BSP_CAMERA_Suspend();
 	}
 }
 
@@ -372,10 +387,13 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 
-	osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 1000);
+	osThreadDef(defaultTask, StartDefaultTask, osPriorityRealtime, 0, 2000);
 	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-	osThreadDef(blinkTaskHandle, blink, osPriorityNormal, 0, 256);
+	osThreadDef(cameraTask, StartCameraTask, osPriorityNormal, 0, 4000);
+	cameraTaskHandle = osThreadCreate(osThread(cameraTask), NULL);
+
+	osThreadDef(blinkTaskHandle, blink, osPriorityHigh, 0, 256);
 	blinkTaskHandle = osThreadCreate(osThread(blinkTaskHandle), NULL);
 
 	/* Start scheduler */
