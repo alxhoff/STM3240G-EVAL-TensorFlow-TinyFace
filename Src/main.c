@@ -260,12 +260,17 @@ void StartDefaultTask(void const *argument)
   */
 void StartCameraTask(void const *argument)
 {
-	BSP_CAMERA_SnapshotStart((uint8_t*)CAMERA_FRAME_BUFFER);
-	BSP_CAMERA_Suspend();
+	// BSP_CAMERA_SnapshotStart((uint8_t*)CAMERA_FRAME_BUFFER);
+	// BSP_CAMERA_Suspend();
 	printf("Started\n");
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE); 
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_DisplayStringAt(0, 100, (uint8_t*)"ello thre yall", CENTER_MODE);
+	
 	for (;;) {
-		BSP_CAMERA_Resume();
-		BSP_CAMERA_Suspend();
+		// BSP_CAMERA_Resume();
+		// BSP_CAMERA_Suspend();
 	}
 }
 
@@ -340,14 +345,14 @@ int main(void)
 	BSP_LCD_DisplayOn();
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 
-	Touchscreen_Calibration();
-	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
+	// Touchscreen_Calibration();
+	// BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 
-	/* Clear the LCD Background layer */
-	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	// /* Clear the LCD Background layer */
+	// BSP_LCD_Clear(LCD_COLOR_WHITE);
 
-	/** Touchscreen_Calibration(); */
-	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
+	// /** Touchscreen_Calibration(); */
+	// BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 
 	/*Link the SD Card disk I/O driver ###################################*/
 	// if (FATFS_LinkDriver(&SD_Driver, SDPath) != 0) { 
@@ -387,8 +392,8 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 
-	osThreadDef(defaultTask, StartDefaultTask, osPriorityRealtime, 0, 2000);
-	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+	// osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 2000);
+	// defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
 	osThreadDef(cameraTask, StartCameraTask, osPriorityNormal, 0, 4000);
 	cameraTaskHandle = osThreadCreate(osThread(cameraTask), NULL);
